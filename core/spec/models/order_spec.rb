@@ -42,17 +42,18 @@ describe Order do
   end
 
   context "#save" do
-    it "should create guest user (when no user assigned)" do
-      order.save
-      order.user.should_not be_nil
+    context "when no user assigner" do
+      it "should create guest user" do
+        order.save
+        order.user.should_not be_nil
+      end
     end
 
     context "when associated with a registered user" do
       let(:order) { Order.new }
       let(:user) { Factory(:user, :email => "user@registered.com") }
-      before {
-        order.user = user
-      }
+      before { order.user = user }
+
       it "should not remove the user" do
         order.save
         order.user.should == user

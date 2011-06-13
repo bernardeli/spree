@@ -26,7 +26,7 @@ class Order < ActiveRecord::Base
   before_create :create_user
   before_create :generate_order_number
 
-  validates_presence_of :email, :if => :require_email
+  validates :email, :presence => { :if => :require_email }
   validate :has_available_shipment
 
   #delegate :ip_address, :to => :checkout
